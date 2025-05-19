@@ -34,5 +34,5 @@ export class User {
   created_at: Date;
 
   @OneToMany(() => CalonSiswa, (calon) => calon.user)
-  calonSiswas: CalonSiswa[];
+  calonSiswa: CalonSiswa[];
 }

@@ -160,4 +160,24 @@ export class AuthService extends BaseResponse {
       );
     }
   }
+
+  async profile(): Promise<ResponseSuccess> {
+    const checkUserExists = await this.authRepository.findOne({
+      where: {
+        id: this.req.user.id,
+      },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        // password: true,
+      },
+    });
+
+    if (!checkUserExists) {
+      throw new HttpException('User tidak ditemukan', HttpStatus.NOT_FOUND);
+    }
+    return this.success('Profile', checkUserExists);
+  }
+  
 }
