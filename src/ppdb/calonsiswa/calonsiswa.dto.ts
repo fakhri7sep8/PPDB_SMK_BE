@@ -1,11 +1,8 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsEmail,
-  Length,
-} from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, Length } from 'class-validator';
 
-export class CreateCalonSiswaDto{
+export class CreateCalonSiswaDto {
+  @IsNotEmpty()
+  user_id: number;
 
   @IsString()
   @IsNotEmpty()

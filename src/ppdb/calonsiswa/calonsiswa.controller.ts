@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Put, Query } from '@nestjs/common';
 import { CalonsiswaService } from './calonsiswa.service';
 import { CreateCalonSiswaDto } from './calonsiswa.dto';
 
@@ -12,7 +12,13 @@ export class CalonsiswaController {
     }
 
     @Post('create')
-    async createCalonSiswa(payload:CreateCalonSiswaDto){
+    async createCalonSiswa(@Body() payload:CreateCalonSiswaDto){
         return this.calonSiswa.createCalonSiswa(payload);
     }
+
+    @Delete('delete')
+    async deleteCalonSiswa(@Query('id') id:number){
+        return this.calonSiswa.deleteCalonSiswa(id);
+    }
+
 }

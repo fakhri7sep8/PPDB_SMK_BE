@@ -10,8 +10,7 @@ import { CreateCalonSiswaDto } from './calonsiswa.dto';
 @Injectable()
 export class CalonsiswaService extends BaseResponse {
   constructor(
-    @InjectRepository(CalonSiswa)
-    private readonly calonSiswa: Repository<CalonSiswa>,
+    @InjectRepository(CalonSiswa) private readonly calonSiswa: Repository<CalonSiswa>,
   ) {
     super();
   }
@@ -24,9 +23,16 @@ export class CalonsiswaService extends BaseResponse {
   async createCalonSiswa(
     payload: CreateCalonSiswaDto,
   ): Promise<ResponseSuccess> {
-    const entity = this.calonSiswa.create(payload); // bikin instance entity
-    const calonSiswa = await this.calonSiswa.save(entity); // baru disave
-
+    const calonSiswa = await this.calonSiswa.save(payload);
     return this.success('Berhasil daftar', calonSiswa);
+  }
+
+  async deleteCalonSiswa(id: number): Promise<ResponseSuccess> {
+    const calonSiswa = await this.calonSiswa.findOneBy({ id: id });
+    if (!calonSiswa) {
+      throw new HttpException('Data tidak ditemukan', HttpStatus.NOT_FOUND);
+    }
+    await this.calonSiswa.remove(calonSiswa);
+    return this.success('Data berhasil dihapus', calonSiswa);
   }
 }
