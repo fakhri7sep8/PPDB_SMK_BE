@@ -3,8 +3,8 @@ import { CalonSiswa } from './calon-siswa.entity';
 
 @Entity('berkas')
 export class Berkas {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne(() => CalonSiswa, (calon) => calon.berkas)
   @JoinColumn({ name: 'calon_siswa_id' })

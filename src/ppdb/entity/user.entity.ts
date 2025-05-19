@@ -9,8 +9,8 @@ import { CalonSiswa } from './calon-siswa.entity';
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ unique: true })
   email: string;
@@ -34,5 +34,5 @@ export class User {
   created_at: Date;
 
   @OneToMany(() => CalonSiswa, (calon) => calon.user)
-  calonSiswas: CalonSiswa[];
+  calonSiswa: CalonSiswa[];
 }

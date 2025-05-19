@@ -7,14 +7,14 @@ import { Pendaftaran } from './pendaftaran.entity';
 import { Berkas } from './berkas.entity';
 @Entity('calon_siswa')
 export class CalonSiswa {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-  @ManyToOne(() => User, (user) => user.calonSiswas)
+  @ManyToOne(() => User, (user) => user.calonSiswa)
   @JoinColumn({ name: 'user_id' })
   user: User;
 
-  @Column()
+  @Column({type: 'varchar', length: 255})
   nama_lengkap: string;
 
   @Column()
@@ -43,6 +43,9 @@ export class CalonSiswa {
 
   @Column()
   email: string;
+
+  @Column()
+  tahun_ajaran: string;
 
   @CreateDateColumn()
   created_at: Date;

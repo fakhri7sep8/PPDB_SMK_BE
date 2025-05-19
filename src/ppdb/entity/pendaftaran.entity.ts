@@ -3,8 +3,8 @@ import { CalonSiswa } from './calon-siswa.entity';
 
 @Entity('pendaftaran')
 export class Pendaftaran {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @ManyToOne(() => CalonSiswa, (calon) => calon.pendaftarans)
   @JoinColumn({ name: 'calon_siswa_id' })
