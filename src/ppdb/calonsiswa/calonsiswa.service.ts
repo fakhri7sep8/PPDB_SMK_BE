@@ -21,12 +21,18 @@ export class CalonsiswaService extends BaseResponse {
     return this.success('Data ditemukan', calonSiswa);
   }
 
-  async createCalonSiswa(
-    payload: CreateCalonSiswaDto,
-  ): Promise<ResponseSuccess> {
-    const entity = this.calonSiswa.create(payload); // bikin instance entity
-    const calonSiswa = await this.calonSiswa.save(entity); // baru disave
+async createCalonSiswa(
+  payload: CreateCalonSiswaDto,
+  userId: number,
+): Promise<ResponseSuccess> {
+  const entity = this.calonSiswa.create({
+    ...payload,
+    user: { id: userId }, // Pastikan ada relasi @ManyToOne di entity
+  });
 
-    return this.success('Berhasil daftar', calonSiswa);
-  }
+  const calonSiswa = await this.calonSiswa.save(entity);
+
+  return this.success('Berhasil daftar', calonSiswa);
+}
+
 }

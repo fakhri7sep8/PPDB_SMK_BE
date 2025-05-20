@@ -7,6 +7,9 @@ import {
 
 export class CreateCalonSiswaDto{
 
+  // @IsNotEmpty()
+  // user_id: number;
+
   @IsString()
   @IsNotEmpty()
   nama_lengkap: string;
