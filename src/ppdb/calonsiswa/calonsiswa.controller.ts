@@ -21,4 +21,8 @@ export class CalonsiswaController {
         return this.calonSiswa.deleteCalonSiswa(id);
     }
 
+    @Get('count')
+    async hitungCalonSiswa(){
+        return this.calonSiswa.hitungCalonSiswa();
+    }
 }

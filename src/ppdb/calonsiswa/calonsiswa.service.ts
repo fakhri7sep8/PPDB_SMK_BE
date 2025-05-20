@@ -10,14 +10,20 @@ import { CreateCalonSiswaDto } from './calonsiswa.dto';
 @Injectable()
 export class CalonsiswaService extends BaseResponse {
   constructor(
-    @InjectRepository(CalonSiswa) private readonly calonSiswa: Repository<CalonSiswa>,
+    @InjectRepository(CalonSiswa)
+    private readonly calonSiswa: Repository<CalonSiswa>,
   ) {
     super();
   }
 
   async getAllCalonSiswa(): Promise<ResponseSuccess> {
     const calonSiswa = await this.calonSiswa.find();
-    return this.success('Data ditemukan', calonSiswa);
+    const count = await this.calonSiswa.count();
+
+    return this.success('Data ditemukan', {
+      calonSiswa: calonSiswa,
+      count: count,
+    });
   }
 
   async createCalonSiswa(
@@ -34,5 +40,10 @@ export class CalonsiswaService extends BaseResponse {
     }
     await this.calonSiswa.remove(calonSiswa);
     return this.success('Data berhasil dihapus', calonSiswa);
+  }
+
+  async hitungCalonSiswa(): Promise<ResponseSuccess> {
+    const count = await this.calonSiswa.count();
+    return this.success('Jumlah calon siswa', count);
   }
 }
