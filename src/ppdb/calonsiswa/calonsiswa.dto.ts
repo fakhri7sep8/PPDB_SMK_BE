@@ -3,7 +3,7 @@ import { IsString, IsNotEmpty, IsEmail, Length } from 'class-validator';
 export class CreateCalonSiswaDto {
   @IsNotEmpty()
   user_id: number;
-
+  //tambah user_id buat test
   @IsString()
   @IsNotEmpty()
   nama_lengkap: string;
