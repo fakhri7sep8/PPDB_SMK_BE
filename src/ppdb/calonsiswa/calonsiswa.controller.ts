@@ -45,4 +45,13 @@ export class CalonsiswaController {
   }
 
 
+ @Post('create')
+  @UseGuards(JwtGuard)
+  async createCalonSiswa(
+    @Body() payload: CreateCalonSiswaDto,
+    @Req() req: any,
+  ) {
+    const userId = req.user.id;
+    return this.calonSiswa.createCalonSiswa(payload, userId);
+  }
 }

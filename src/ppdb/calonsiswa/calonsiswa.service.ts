@@ -26,7 +26,10 @@ export class CalonsiswaService extends BaseResponse {
     });
   }
 
-  async createCalonSiswa(
+
+ 
+async createCalonSiswa(
+
   payload: CreateCalonSiswaDto,
   userId: number,
 ): Promise<ResponseSuccess> {
@@ -39,6 +42,7 @@ export class CalonsiswaService extends BaseResponse {
 
   return this.success('Berhasil daftar', calonSiswa);
 }
+
 
   async updateCalonSiswa(id:number, payload:UpdateCalonSiswa):Promise<ResponseSuccess> {
     try{
