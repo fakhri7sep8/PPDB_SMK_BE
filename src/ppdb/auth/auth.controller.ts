@@ -17,6 +17,11 @@ export class AuthController {
         return this.authService.login(payload);
     }
 
+    @Post('login-admin')
+    async loginAdmin(@Body()payload:LoginDto){
+        return this.authService.loginAdmin(payload);
+    }
+
     @UseGuards(JwtGuard)
     @Get('profile')
     async profile(){
