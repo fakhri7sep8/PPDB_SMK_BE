@@ -6,6 +6,7 @@ import { AuthModule } from './ppdb/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CalonsiswaModule } from './ppdb/calonsiswa/calonsiswa.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -18,7 +19,7 @@ import { CalonsiswaModule } from './ppdb/calonsiswa/calonsiswa.module';
       }
     }),
     AuthModule,
-    CalonsiswaModule
+    CalonsiswaModule,
   ],
   controllers: [AppController],
   providers: [AppService],

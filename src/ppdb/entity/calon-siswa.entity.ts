@@ -3,7 +3,6 @@ import {
   ManyToOne, OneToMany, JoinColumn,
 } from 'typeorm';
 import { User } from './user.entity';
-import { Pendaftaran } from './pendaftaran.entity';
 import { Berkas } from './berkas.entity';
 @Entity('calon_siswa')
 export class CalonSiswa {
@@ -50,9 +49,9 @@ export class CalonSiswa {
   @CreateDateColumn()
   created_at: Date;
 
-  @OneToMany(() => Pendaftaran, (p) => p.calonSiswa)
-  pendaftarans: Pendaftaran[];
-
   @OneToMany(() => Berkas, (b) => b.calonSiswa)
   berkas: Berkas[];
+
+  @Column({ default: 'Pending' })
+  status: string; 
 }
