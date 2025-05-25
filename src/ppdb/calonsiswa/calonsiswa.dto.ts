@@ -1,14 +1,6 @@
-import {
-  IsString,
-  IsNotEmpty,
-  IsEmail,
-  Length,
-} from 'class-validator';
+import { IsString, IsNotEmpty, IsEmail, Length } from 'class-validator';
 
-export class CreateCalonSiswaDto{
-
-  // @IsNotEmpty()
-  // user_id: number;
+export class CreateCalonSiswaDto {
 
   @IsString()
   @IsNotEmpty()
@@ -54,3 +46,5 @@ export class CreateCalonSiswaDto{
   @IsNotEmpty()
   tahun_ajaran: string;
 }
+
+export class UpdateCalonSiswa extends CreateCalonSiswaDto{}

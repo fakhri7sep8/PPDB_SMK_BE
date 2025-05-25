@@ -95,71 +95,159 @@ export class AuthService extends BaseResponse {
     return this.success('Register Success', user);
   }
 
-  async login(payload: LoginDto): Promise<ResponseSuccess> {
-    const checkUserExists = await this.authRepository.findOne({
-      where: {
-        email: payload.email,
-      },
-      select: {
-        id: true,
-        username: true,
-        email: true,
-        password: true,
-        refresh_token: true,
-      },
-    });
+  async loginAdmin(payload: LoginDto): Promise<ResponseSuccess> {
+  const checkUserExists = await this.authRepository.findOne({
+    where: {
+      email: payload.email === 'admin' ? 'admin' : payload.email,
+    },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      password: true,
+      refresh_token: true,
+      role: true, // pastikan ini ada
+    },
+  });
 
-    if (!checkUserExists) {
-      throw new HttpException(
-        'User tidak ditemukan',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
-
-    const checkPassword = await compare(
-      payload.password,
-      checkUserExists.password,
+  if (!checkUserExists) {
+    throw new HttpException(
+      'User tidak ditemukan',
+      HttpStatus.UNPROCESSABLE_ENTITY,
     );
-    if (checkPassword) {
-      const jwtPayload: jwtPayload = {
-        id: checkUserExists.id,
-        username: checkUserExists.username,
-        email: checkUserExists.email,
-      };
-
-      const access_token = await this.generateJWT(
-        jwtPayload,
-        '1d',
-        process.env.ACCESS_TOKEN_SECRET!,
-      );
-
-      const refresh_token = await this.generateJWT(
-        jwtPayload,
-        '1d',
-        process.env.REFRESH_TOKEN_SECRET!,
-      );
-
-      await this.authRepository.update(
-        {
-          id: checkUserExists.id,
-        },
-        {
-          refresh_token: refresh_token,
-        },
-      );
-
-      return this.success('Login Success', {
-        ...checkUserExists,
-        access_token,
-        refresh_token
-      });
-    } else {
-      throw new HttpException(
-        'email dan password tidak sama',
-        HttpStatus.UNPROCESSABLE_ENTITY,
-      );
-    }
   }
+
+  // ✅ Cek role admin
+  if (checkUserExists.role !== 'admin') {
+    throw new HttpException(
+      'Hanya admin yang bisa login',
+      HttpStatus.FORBIDDEN,
+    );
+  }
+
+  const checkPassword = await compare(
+    payload.password,
+    checkUserExists.password,
+  );
+
+  if (!checkPassword) {
+    throw new HttpException(
+      'Email dan password tidak sesuai',
+      HttpStatus.UNPROCESSABLE_ENTITY,
+    );
+  }
+
+  const jwtPayload: jwtPayload = {
+    id: checkUserExists.id,
+    username: checkUserExists.username,
+    email: checkUserExists.email,
+  };
+
+  const access_token = await this.generateJWT(
+    jwtPayload,
+    '1d',
+    process.env.ACCESS_TOKEN_SECRET!,
+  );
+
+  const refresh_token = await this.generateJWT(
+    jwtPayload,
+    '1d',
+    process.env.REFRESH_TOKEN_SECRET!,
+  );
+
+  await this.authRepository.update(
+    {
+      id: checkUserExists.id,
+    },
+    {
+      refresh_token: refresh_token,
+    },
+  );
+
+  return this.success('Login Success', {
+    ...checkUserExists,
+    access_token,
+    refresh_token,
+  });
+}
+
+
+  async login(payload: LoginDto): Promise<ResponseSuccess> {
+  const checkUserExists = await this.authRepository.findOne({
+    where: {
+      email: payload.email === 'user' ? 'user' : payload.email,
+    },
+    select: {
+      id: true,
+      username: true,
+      email: true,
+      password: true,
+      refresh_token: true,
+      role: true, // tambahin ini
+    },
+  });
+
+  if (!checkUserExists) {
+    throw new HttpException(
+      'User tidak ditemukan',
+      HttpStatus.UNPROCESSABLE_ENTITY,
+    );
+  }
+
+  // ⛔ Cek role harus 'user'
+  if (checkUserExists.role !== 'user') {
+    throw new HttpException(
+      'Hanya user yang bisa login di sini',
+      HttpStatus.FORBIDDEN,
+    );
+  }
+
+  const checkPassword = await compare(
+    payload.password,
+    checkUserExists.password,
+  );
+
+  if (!checkPassword) {
+    throw new HttpException(
+      'Email dan password tidak sesuai',
+      HttpStatus.UNPROCESSABLE_ENTITY,
+    );
+  }
+
+  const jwtPayload: jwtPayload = {
+    id: checkUserExists.id,
+    username: checkUserExists.username,
+    email: checkUserExists.email,
+  };
+
+  const access_token = await this.generateJWT(
+    jwtPayload,
+    '1d',
+    process.env.ACCESS_TOKEN_SECRET!,
+  );
+
+  const refresh_token = await this.generateJWT(
+    jwtPayload,
+    '1d',
+    process.env.REFRESH_TOKEN_SECRET!,
+  );
+
+  await this.authRepository.update(
+    {
+      id: checkUserExists.id,
+    },
+    {
+      refresh_token: refresh_token,
+    },
+  );
+
+  return this.success('Login Success', {
+    ...checkUserExists,
+    access_token,
+    refresh_token,
+  });
+}
+
 
   async profile(): Promise<ResponseSuccess> {
     const checkUserExists = await this.authRepository.findOne({
@@ -180,5 +268,4 @@ export class AuthService extends BaseResponse {
     return this.success('Profile', checkUserExists);
   }
   
-  /// biarlah orang berkata apa
 }

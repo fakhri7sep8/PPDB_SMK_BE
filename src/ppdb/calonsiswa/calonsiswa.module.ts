@@ -6,10 +6,11 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtAccessTokenStrategy } from '../auth/jwtAccessToken.strategy';
 import { JwtRefreshTokenStrategy } from '../auth/jwtRefreshToken.strategy';
 import { CalonSiswa } from '../entity/calon-siswa.entity';
+import { User } from '../entity/user.entity';
 
 @Module({
   imports : [
-    TypeOrmModule.forFeature([CalonSiswa]),
+    TypeOrmModule.forFeature([CalonSiswa, User]),
     JwtModule.register({})
   ],
   controllers: [CalonsiswaController],

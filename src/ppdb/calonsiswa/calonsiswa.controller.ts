@@ -1,14 +1,16 @@
 import {
   Body,
-  Controller,
-  Get,
-  Param,
+  Controller, 
   ParseIntPipe,
   Patch,
   Post,
   Put,
+  Delete,
+  Param,
+  Query,
   Req,
   UseGuards,
+  Get,
 } from '@nestjs/common';
 import { CalonsiswaService } from './calonsiswa.service';
 import { CreateCalonSiswaDto } from './calonsiswa.dto';
@@ -22,6 +24,19 @@ export class CalonsiswaController {
   async getAllCalonSiswa() {
     return this.calonSiswa.getAllCalonSiswa();
   }
+
+
+  @Put('update/:id')
+  // @UseGuards(JwtGuard)
+  async updateCalonSiswa(@Body() payload: CreateCalonSiswaDto,@Param('id') id: string) {
+    return this.calonSiswa.updateCalonSiswa(+id,payload);
+  }
+
+  @Delete('delete')
+  async deleteCalonSiswa(@Query('id') id: number) {
+    return this.calonSiswa.deleteCalonSiswa(id);
+  }
+
 
   @Post('create')
   @UseGuards(JwtGuard)
