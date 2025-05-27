@@ -6,7 +6,9 @@ import { AuthModule } from './ppdb/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CalonsiswaModule } from './ppdb/calonsiswa/calonsiswa.module';
 import { CloudinaryModule } from './ppdb/cloudinary/cloudinary.module';
-import { BankSoalModule } from './ppdb/bank-soal/bank-soal.module';
+import { BerkasModule } from './ppdb/berkas/berkas.module';
+import { SoalModule } from './ppdb/soal/soal.module';
+import { UserJawabanModule } from './ppdb/user-jawaban/user-jawaban.module';
 
 
 @Module({
@@ -23,7 +25,9 @@ import { BankSoalModule } from './ppdb/bank-soal/bank-soal.module';
     AuthModule,
     CalonsiswaModule,
     CloudinaryModule,
-    BankSoalModule
+    BerkasModule,
+    SoalModule,
+    UserJawabanModule,
   ],
   controllers: [AppController],
   providers: [AppService],
