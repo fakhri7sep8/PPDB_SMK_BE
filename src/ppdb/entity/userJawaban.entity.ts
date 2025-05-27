@@ -1,20 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { Soal } from './soal.entity';
 
 @Entity()
-export class OpsiJawaban {
+export class UserJawaban {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Soal, (soal) => soal.opsiJawaban, { onDelete: 'CASCADE' })
+  @Column()
+  id_user: number;
+
+  @ManyToOne(() => Soal, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'id_soal' })
   soal: Soal;
 
   @Column()
-  isi: string;
+  jawaban: string;
 
-  @Column({ length: 1 })
-  kode: string; // A, B, C, D
+  @Column()
+  benar: boolean;
 
-  @Column({ default: false })
-  is_benar: boolean;
+  @Column()
+  skor: number;
 }
