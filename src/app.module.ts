@@ -6,7 +6,7 @@ import { AuthModule } from './ppdb/auth/auth.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CalonsiswaModule } from './ppdb/calonsiswa/calonsiswa.module';
 import { CloudinaryModule } from './ppdb/cloudinary/cloudinary.module';
-import { BerkasModule } from './berkas/berkas.module';
+import { BerkasModule } from './ppdb/berkas/berkas.module';
 import { SoalModule } from './ppdb/soal/soal.module';
 
 
