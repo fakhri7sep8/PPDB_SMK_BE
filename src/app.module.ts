@@ -8,6 +8,7 @@ import { CalonsiswaModule } from './ppdb/calonsiswa/calonsiswa.module';
 import { CloudinaryModule } from './ppdb/cloudinary/cloudinary.module';
 import { BerkasModule } from './ppdb/berkas/berkas.module';
 import { SoalModule } from './ppdb/soal/soal.module';
+import { UserJawabanModule } from './ppdb/user-jawaban/user-jawaban.module';
 
 
 @Module({
@@ -26,6 +27,7 @@ import { SoalModule } from './ppdb/soal/soal.module';
     CloudinaryModule,
     BerkasModule,
     SoalModule,
+    UserJawabanModule,
   ],
   controllers: [AppController],
   providers: [AppService],

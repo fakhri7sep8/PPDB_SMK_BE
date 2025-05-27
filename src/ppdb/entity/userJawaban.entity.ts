@@ -7,18 +7,18 @@ export class UserJawaban {
   id: number;
 
   @Column()
-  id_user: number; // Bisa relasi ke user entity jika ada
+  id_user: number;
 
   @ManyToOne(() => Soal, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'id_soal' })
   soal: Soal;
 
   @Column()
-  jawaban: string; // Misal: 'A', 'B', dll
+  jawaban: string;
 
   @Column()
   benar: boolean;
 
-  @Column('int')
+  @Column()
   skor: number;
 }
