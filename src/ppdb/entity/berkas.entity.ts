@@ -22,6 +22,6 @@ export class Berkas {
   @Column()
   status: string;
 
-  @Column({ nullable: true })
-  keterangan: string;
+  @Column({ nullable: true, type: 'text' })
+  keterangan?: string | null;
 }

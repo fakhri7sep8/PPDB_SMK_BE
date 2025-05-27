@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { ResponseSuccess } from 'src/interface/response.interface';
 import { Repository } from 'typeorm';
 import { CreateCalonSiswaDto, UpdateCalonSiswa } from './calonsiswa.dto';
+import { Berkas } from '../entity/berkas.entity';
 
 @Injectable()
 export class CalonsiswaService extends BaseResponse {
@@ -39,7 +40,7 @@ async createCalonSiswa(
 ): Promise<ResponseSuccess> {
   const entity = this.calonSiswa.create({
     ...payload,
-    user: { id: userId }, // Pastikan ada relasi @ManyToOne di entity
+    user: { id: userId },
   });
 
     const calonSiswa = await this.calonSiswa.save(entity);
@@ -48,7 +49,7 @@ async createCalonSiswa(
   }
 
   async getDetail(id: number) {
-    const siswa = await this.calonSiswa.findOne({ where: { id } });
+    const siswa = await this.calonSiswa.findOne({ where: { id } , relations : ['berkas'] });
 
     if (!siswa) {
       throw new NotFoundException('Calon siswa tidak ditemukan');
