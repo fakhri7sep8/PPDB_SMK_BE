@@ -194,7 +194,6 @@ export class AuthService extends BaseResponse {
     );
   }
 
-  // ⛔ Cek role harus 'user'
   if (checkUserExists.role !== 'user') {
     throw new HttpException(
       'Hanya user yang bisa login di sini',
