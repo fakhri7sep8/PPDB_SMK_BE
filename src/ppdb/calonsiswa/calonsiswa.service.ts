@@ -50,11 +50,9 @@ async createCalonSiswa(
 
   async getDetail(id: number) {
     const siswa = await this.calonSiswa.findOne({ where: { id } , relations : ['berkas'] });
-
     if (!siswa) {
       throw new NotFoundException('Calon siswa tidak ditemukan');
     }
-
     return {
       message: 'OK',
       siswa,

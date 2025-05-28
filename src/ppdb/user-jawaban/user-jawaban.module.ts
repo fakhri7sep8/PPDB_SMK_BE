@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserJawaban } from '../entity/userJawaban.entity';
 import { OpsiJawaban } from '../entity/opsiJawaban.entity';
 import { Soal } from '../entity/soal.entity';
+import { User } from '../entity/user.entity';
 
 @Module({
-  imports : [TypeOrmModule.forFeature([UserJawaban,OpsiJawaban,Soal])],
+  imports : [TypeOrmModule.forFeature([UserJawaban,OpsiJawaban,Soal,User])],
   providers: [UserJawabanService],
   controllers: [UserJawabanController]
 })
