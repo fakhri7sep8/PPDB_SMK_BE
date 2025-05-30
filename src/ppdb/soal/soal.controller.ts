@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Post, Body, Delete, Param } from '@nestjs/common';
+import { Controller, Get, Query, Post, Body, Delete, Param, Put } from '@nestjs/common';
 import { SoalService } from './soal.service';
 import { Soal } from 'src/ppdb/entity/soal.entity';
 
@@ -16,9 +16,19 @@ export class SoalController {
   createSoal(@Body() soal: Partial<Soal>){
     return this.soalService.create(soal);
   }
+
+  @Put('update/:id')
+  updateSoal(@Param('id') id: string, @Body() soal: Partial<Soal>) {
+    return this.soalService.updateSoal(id, soal);
+  }
   
   @Delete('delete')
   deleteSoal(@Query('id') id: string) {
     return this.soalService.deleteSoal(id);
+  }
+
+  @Get('/:id')
+  findById(@Param('id') id: string) {
+    return this.soalService.findById(id);
   }
 }
