@@ -5,13 +5,17 @@ import { UserJawaban } from '../entity/userJawaban.entity';
 import { Soal } from '../entity/soal.entity';
 import { OpsiJawaban } from '../entity/opsiJawaban.entity';
 import { CreateUserJawabanDto } from './user-jawaban.dto';
-import { User } from '../entity/user.entity'; // pastikan path sesuai
+import { User } from '../entity/user.entity';
 import BaseResponse from 'src/utils/response.utils';
 import { ResponseSuccess } from 'src/interface/response.interface';
+import { CalonSiswa } from '../entity/calon-siswa.entity';
 
 @Injectable()
 export class UserJawabanService extends BaseResponse {
   constructor(
+    @InjectRepository(CalonSiswa)
+    private calonSiswaRepo: Repository<CalonSiswa>,
+
     @InjectRepository(UserJawaban)
     private ujRepo: Repository<UserJawaban>,
     @InjectRepository(Soal)
@@ -20,9 +24,9 @@ export class UserJawabanService extends BaseResponse {
     private opsiRepo: Repository<OpsiJawaban>,
     @InjectRepository(User)
     private userRepo: Repository<User>,
-    @Inject('REQUEST') private req:any
+    @Inject('REQUEST') private req: any,
   ) {
-    super()
+    super();
   }
 
   async submitJawaban(dto: CreateUserJawabanDto): Promise<ResponseSuccess> {
@@ -35,9 +39,19 @@ export class UserJawabanService extends BaseResponse {
       throw new Error('Soal tidak ditemukan');
     }
 
-    const user = await this.userRepo.findOne({ where: { id: this.req.user.id } });
+    const user = await this.userRepo.findOne({
+      where: { id: this.req.user.id },
+    });
     if (!user) {
       throw new Error('User tidak ditemukan');
+    }
+
+    const calonSiswa = await this.calonSiswaRepo.findOne({
+      where: { id: dto.id_calon_siswa },
+    });
+
+    if (!calonSiswa) {
+      throw new Error('Calon siswa tidak ditemukan');
     }
 
     const jawabanBenar = soal.opsiJawaban.find(
@@ -49,17 +63,21 @@ export class UserJawabanService extends BaseResponse {
 
     const uj = this.ujRepo.create({
       user,
+      calonSiswa, // 👈 simpan juga ke calon siswa
       soal,
       jawaban: dto.jawaban,
       benar,
       skor,
     });
+
     const save = await this.ujRepo.save(uj);
     return this.success('Jawaban berhasil disimpan', save);
   }
 
-  async findByUser(id_user: number):Promise<ResponseSuccess> {
-    const user = await this.userRepo.findOne({ where: { id: this.req.user.id } });
+  async findByUser(): Promise<ResponseSuccess> {
+    const user = await this.userRepo.findOne({
+      where: { id: this.req.user.id },
+    });
     if (!user) {
       throw new Error('User tidak ditemukan');
     }

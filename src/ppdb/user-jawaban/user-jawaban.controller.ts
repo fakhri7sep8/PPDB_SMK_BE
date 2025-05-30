@@ -13,9 +13,10 @@ export class UserJawabanController {
     return this.ujService.submitJawaban(dto);
   }
 
-  @UseGuards(JwtGuard)
-  @Get()
-  findByUser(@Param('id_user') id_user: number) {
-    return this.ujService.findByUser(id_user);
-  }
+@UseGuards(JwtGuard)
+@Get()
+findByUser() {
+  return this.ujService.findByUser();
+}
+
 }
