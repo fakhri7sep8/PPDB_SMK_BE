@@ -80,4 +80,5 @@ export class SoalService extends BaseResponse {
     return this.success("Berhasil mengambil data soal", find);
   }
 
+  
 }

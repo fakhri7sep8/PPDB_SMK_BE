@@ -31,4 +31,6 @@ export class SoalController {
   findById(@Param('id') id: string) {
     return this.soalService.findById(id);
   }
+
+  
 }

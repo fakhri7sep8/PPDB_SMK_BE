@@ -28,4 +28,5 @@ export class UserJawaban {
 
   @Column()
   skor: number;
+  id_calon_siswa: any;
 }

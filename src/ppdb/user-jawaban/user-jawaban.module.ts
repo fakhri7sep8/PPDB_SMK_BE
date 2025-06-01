@@ -7,9 +7,10 @@ import { OpsiJawaban } from '../entity/opsiJawaban.entity';
 import { Soal } from '../entity/soal.entity';
 import { User } from '../entity/user.entity';
 import { CalonSiswa } from '../entity/calon-siswa.entity';
+import { NilaiKategori } from '../entity/nilaiUser.entity';
 
 @Module({
-  imports : [TypeOrmModule.forFeature([UserJawaban,OpsiJawaban,Soal,User,CalonSiswa])],
+  imports : [TypeOrmModule.forFeature([UserJawaban,OpsiJawaban,Soal,User,CalonSiswa , NilaiKategori])],
   providers: [UserJawabanService],
   controllers: [UserJawabanController]
 })
